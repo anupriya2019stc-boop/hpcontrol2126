@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For You, Selvan 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Poppins:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #ffd6e7 0%, #ff9ec4 50%, #ff6fa5 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', 'Noto Sans Tamil', sans-serif;
+      color: #161214;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .pink-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-heart {
+      position: fixed;
+      bottom: -30px;
+      animation: floatPinkHeart linear forwards;
+      user-select: none;
+    }
+
+    @keyframes floatPinkHeart {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.85;
+      }
+      100% {
+        transform: translateY(-110vh) rotate(15deg);
+        opacity: 0;
+      }
+    }
+
+    .card {
+      background: #fff7fa;
+      border: 2px solid #ffffff;
+      box-shadow: 0 18px 40px rgba(190, 24, 93, 0.25);
+      border-radius: 28px;
+      padding: 34px 24px;
+      max-width: 450px;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+      animation: fadeSlow 1s ease;
+    }
+
+    @keyframes fadeSlow {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .top-pill {
+      display: inline-block;
+      background: #ffe0ee;
+      color: #9d174d;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+      border: 1px solid #ffb8d6;
+    }
+
+    .stylish-font {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 700;
+      font-style: italic;
+      color: #141012;
+    }
+
+    .big-emoji {
+      font-size: 54px;
+      margin: 8px 0 14px;
+    }
+
+    .pass-input {
+      width: 100%;
+      max-width: 220px;
+      padding: 12px 16px;
+      font-size: 22px;
+      letter-spacing: 8px;
+      text-align: center;
+      font-weight: 700;
+      color: #141012;
+      background: #ffffff;
+      border: 2px solid #ff7eb3;
+      border-radius: 15px;
+      outline: none;
+      margin: 14px auto 8px;
+      display: block;
+    }
+
+    .error-msg {
+      color: #be123c;
+      font-size: 13px;
+      min-height: 20px;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .pink-btn {
+      background: linear-gradient(135deg, #ff3b85, #ff70a6);
+      color: #ffffff;
+      border: none;
+      padding: 13px 26px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(255, 59, 133, 0.32);
+      margin-top: 10px;
+      font-family: 'Poppins', 'Noto Sans Tamil', sans-serif;
+    }
+
+    .touch-hearts-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin: 18px 0 10px;
+    }
+
+    .touch-heart-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid #ff94c2;
+      background: #ffffff;
+      font-size: 30px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .touch-heart-btn.popped {
+      transform: scale(0);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .cake-box {
+      margin: 16px auto 18px;
+      width: 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .candles {
+      display: flex;
+      gap: 14px;
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    .cake-body {
+      width: 140px;
+      padding: 14px 10px;
+      border-radius: 16px;
+      background: #ff5c9c;
+      color: #ffffff;
+      font-weight: 600;
+      border: 2px solid #ffffff;
+    }
+
+    .count-num {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 88px;
+      font-weight: 700;
+      font-style: italic;
+      color: #141012;
+      min-height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.9s ease;
+    }
+
+    .count-num.show {
+      opacity: 1;
+    }
+
+    .msg-container {
+      background: #ffffff;
+      border: 1.5px solid #ffc2dc;
+      border-radius: 20px;
+      padding: 18px 16px;
+      text-align: left;
+      max-height: 350px;
+      overflow-y: auto;
+      margin-bottom: 14px;
+    }
+
+    .msg-line {
+      font-size: 14.5px;
+      line-height: 1.75;
+      color: #161214;
+      margin-bottom: 10px;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    .msg-line.show {
+      opacity: 1;
+    }
+
+    .msg-line.final-highlight {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 14px;
+      background: #ffe3ef;
+      border: 1.5px solid #ff70a6;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 22px;
+      text-align: center;
+      color: #120e10;
+    }
+
+    .number-orb {
+      width: 92px;
+      height: 92px;
+      margin: 14px auto 18px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2.5px solid #ff6ea8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 44px;
+      font-weight: 700;
+      font-style: italic;
+      color: #141012;
+      cursor: pointer;
+    }
+
+    .reveal-reason-box {
+      min-height: 96px;
+      background: #ffffff;
+      border: 1.5px dashed #ff85b5;
+      border-radius: 18px;
+      padding: 18px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    .reveal-reason-box.show {
+      opacity: 1;
+    }
+
+    .reveal-reason-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 26px;
+      font-weight: 700;
+      font-style: italic;
+      color: #141012;
+      line-height: 1.38;
+    }
+
+    .fade-slow-text {
+      opacity: 0;
+      transition: opacity 1.3s ease;
+    }
+
+    .fade-slow-text.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="pink-bg" id="pinkBg"></div>
+
+  <div class="card">
+    <!-- 1. PASSWORD 2126 -->
+    <div class="step active" id="step-password">
+      <div class="top-pill">PINK SECRET LOCK</div>
+      <div class="big-emoji">🔐</div>
+      <h2 class="stylish-font" style="font-size:32px;">Enter the Password</h2>
+      <p style="font-size:13.5px; color:#3b2f35; margin-top:4px;">Secret lock-a open panna password podu...</p>
+      <input type="password" inputmode="numeric" maxlength="4" id="passInput" class="pass-input" placeholder="••••" autocomplete="off" />
+      <div class="error-msg" id="passError"></div>
+      <button class="pink-btn" onclick="checkPassword()">Unlock 💖</button>
+    </div>
+
+    <!-- 2. 5 HEARTS -->
+    <div class="step" id="step-hearts">
+      <div class="top-pill">TOUCH THE 5 HEARTS</div>
+      <div id="heartCounter" style="font-weight:600; font-size:14px;">Hearts touched: 0 / 5 🩷</div>
+      <p style="font-size:13.5px; color:#3b2f35; margin-top:4px;">5 pink hearts-ayum touch pannu!</p>
+      <div class="touch-hearts-grid">
+        <button class="touch-heart-btn" onclick="touchHeart(this)">🩷</button>
+        <button class="touch-heart-btn" onclick="touchHeart(this)">💖</button>
+        <button class="touch-heart-btn" onclick="touchHeart(this)">💗</button>
+        <button class="touch-heart-btn" onclick="touchHeart(this)">💓</button>
+        <button class="touch-heart-btn" onclick="touchHeart(this)">💕</button>
+      </div>
+    </div>
+
+    <!-- 3. RIGHT LA PAARU ERUMA -->
+    <div class="step" id="step-right">
+      <div class="top-pill">LOOK RIGHT</div>
+      <div class="big-emoji">👉</div>
+      <div class="stylish-font" style="font-size:28px; margin-bottom:14px;">right la paaru eruma...</div>
+      <button class="pink-btn" onclick="goToStep('step-left')">Paathen, next? ➡️</button>
+    </div>
+
+    <!-- 4. LEFT LA PAARU ERUMA -->
+    <div class="step" id="step-left">
+      <div class="top-pill">LOOK LEFT</div>
+      <div class="big-emoji">👈😂</div>
+      <div class="stylish-font" style="font-size:28px; margin-bottom:14px;">Left la paaru eruma😂..</div>
+      <button class="pink-btn" onclick="goToStep('step-onnum-ila')">Adhuvum paathen 😅</button>
+    </div>
+
+    <!-- 5. SARI ONNUM ILA -->
+    <div class="step" id="step-onnum-ila">
+      <div class="top-pill">JUST KIDDING</div>
+      <div class="big-emoji">🙈</div>
+      <div class="stylish-font" style="font-size:28px; margin-bottom:14px;">Sari onnum ila</div>
+      <button class="pink-btn" onclick="goToStep('step-kova-padatha')">Enna idhu? 🤔</button>
+    </div>
+
+    <!-- 6. IRU IRU KOVA PADATHA -->
+    <div class="step" id="step-kova-padatha">
+      <div class="top-pill">NO ANGER</div>
+      <div class="big-emoji">🥺💗</div>
+      <div class="stylish-font" style="font-size:28px; margin-bottom:14px;">iru iru kova padatha</div>
+      <button class="pink-btn" onclick="goToStep('step-cake')">Sari poda 🎂</button>
+    </div>
+
+    <!-- 7. CAKE -->
+    <div class="step" id="step-cake">
+      <div class="top-pill">MAKE A WISH</div>
+      <h2 class="stylish-font" style="font-size:30px;">Cake-a oothu paappom!</h2>
+      <div class="cake-box">
+        <div class="candles" id="candlesRow">
+          <span>🕯️</span><span>🕯️</span><span>🕯️</span>
+        </div>
+        <div class="cake-body" id="cakeLabel">🎂 Birthday Cake 🎂</div>
+      </div>
+      <button class="pink-btn" id="blowBtn" onclick="blowCake()">🌬️ Blow the Cake</button>
+    </div>
+
+    <!-- 8. COUNTDOWN 1 -> 2 -> 3 -->
+    <div class="step" id="step-countdown">
+      <div class="top-pill">GET READY</div>
+      <div class="count-num" id="countNumber">1</div>
+    </div>
+
+    <!-- 9. HAPPY BIRTHDAY MY SPECIAL PERSON -->
+    <div class="step" id="step-bday-special">
+      <div class="top-pill">SPECIAL DAY</div>
+      <div class="big-emoji">🎂💖</div>
+      <div class="stylish-font fade-slow-text" id="bdaySpecialTitle" style="font-size:38px; line-height:1.3; margin-bottom:16px;">
+        Happy Birthday my special person
+      </div>
+      <button class="pink-btn fade-slow-text" id="toLittleMsgBtn" onclick="goToStep('step-little-msg')">
+        Continue 💕
+      </button>
+    </div>
+
+    <!-- 10. A LITTLE MSG FOR YOU -->
+    <div class="step" id="step-little-msg">
+      <div class="top-pill">FROM MY HEART</div>
+      <div class="big-emoji">💌</div>
+      <div class="stylish-font fade-slow-text" id="littleMsgHeading" style="font-size:34px; line-height:1.3; margin-bottom:16px;">
+        A little msg for you...
+      </div>
+      <button class="pink-btn fade-slow-text" id="toSecretMsgBtn" onclick="openSecretMessagePage()">
+        Read Message ✨
+      </button>
+    </div>
+
+    <!-- 11. SECRET MSG LINE BY LINE -->
+    <div class="step" id="step-secret-msg">
+      <div class="top-pill">MY PERSONAL NOTE</div>
+      <h2 class="stylish-font" style="font-size:28px; margin-bottom:12px;">For You, Selvan</h2>
+      <div class="msg-container" id="msgContainer"></div>
+      <button class="pink-btn" id="toWhySpecialBtn" style="display:none;" onclick="goToStep('step-why-special')">
+        Next Page 💖
+      </button>
+    </div>
+
+    <!-- 12. WHY YOU VERY SPECIAL TO ME -->
+    <div class="step" id="step-why-special">
+      <div class="top-pill">10 REASONS</div>
+      <div class="big-emoji">🩷🫂</div>
+      <div class="stylish-font fade-slow-text" id="whySpecialTitle" style="font-size:34px; line-height:1.3; margin-bottom:16px;">
+        Why you very special to me
+      </div>
+      <button class="pink-btn fade-slow-text" id="startReasonsBtn" onclick="startNumberReasons()">
+        See 1 to 10 ✨
+      </button>
+    </div>
+
+    <!-- 13. 1 TO 10 REASONS -->
+    <div class="step" id="step-reason-item">
+      <div class="top-pill" id="reasonBadge">REASON 1 OF 10</div>
+      <div id="reasonHint" style="font-size:13.5px; color:#3b2f35; font-weight:500;">1 ah touch pannu...</div>
+      <div class="number-orb" id="numberOrb" onclick="revealReasonText()">1</div>
+      <div class="reveal-reason-box" id="reasonBox">
+        <div class="reveal-reason-text" id="reasonText"></div>
+      </div>
+      <button class="pink-btn" id="nextReasonBtn" style="display:none;" onclick="nextReasonStep()">
+        Next ➡️
+      </button>
+    </div>
+
+    <!-- 14. FINAL THANK YOU -->
+    <div class="step" id="step-thank-you">
+      <div class="top-pill">FOREVER GRATEFUL</div>
+      <div class="big-emoji">❤️🫂</div>
+      <div class="stylish-font fade-slow-text" id="thankYouQuote" style="font-size:36px; line-height:1.35; margin-bottom:18px;">
+        Thank you for coming into my life
+      </div>
+      <button class="pink-btn" onclick="restartExperience()">Replay From Start 🔄</button>
+    </div>
+  </div>
+
+  <script>
+    const pinkHeartChars = ['🩷', '💖', '💗', '💓', '💕', '🌸'];
+    function spawnPinkHeart() {
+      const bg = document.getElementById('pinkBg');
+      const el = document.createElement('div');
+      el.className = 'bg-heart';
+      el.textContent = pinkHeartChars[Math.floor(Math.random() * pinkHeartChars.length)];
+      el.style.fontSize = (Math.random() * 12 + 18) + 'px';
+      el.style.left = Math.random() * 100 + 'vw';
+      const dur = Math.random() * 3 + 5;
+      el.style.animationDuration = dur + 's';
+      bg.appendChild(el);
+      setTimeout(() => el.remove(), dur * 1000 + 200);
+    }
+    setInterval(spawnPinkHeart, 450);
+    for (let i = 0; i < 8; i++) setTimeout(spawnPinkHeart, i * 180);
+
+    function goToStep(stepId) {
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById(stepId).classList.add('active');
+
+      if (stepId === 'step-bday-special') {
+        const t = document.getElementById('bdaySpecialTitle');
+        const b = document.getElementById('toLittleMsgBtn');
+        t.classList.remove('show');
+        b.classList.remove('show');
+        setTimeout(() => t.classList.add('show'), 400);
+        setTimeout(() => b.classList.add('show'), 2000);
+      } else if (stepId === 'step-little-msg') {
+        const t = document.getElementById('littleMsgHeading');
+        const b = document.getElementById('toSecretMsgBtn');
+        t.classList.remove('show');
+        b.classList.remove('show');
+        setTimeout(() => t.classList.add('show'), 400);
+        setTimeout(() => b.classList.add('show'), 2000);
+      } else if (stepId === 'step-why-special') {
+        const t = document.getElementById('whySpecialTitle');
+        const b = document.getElementById('startReasonsBtn');
+        t.classList.remove('show');
+        b.classList.remove('show');
+        setTimeout(() => t.classList.add('show'), 400);
+        setTimeout(() => b.classList.add('show'), 2000);
+      } else if (stepId === 'step-thank-you') {
+        const t = document.getElementById('thankYouQuote');
+        t.classList.remove('show');
+        setTimeout(() => t.classList.add('show'), 600);
+      }
+    }
+
+    function checkPassword() {
+      const input = document.getElementById('passInput');
+      const err = document.getElementById('passError');
+      if (input.value.trim() === '2126') {
+        err.textContent = '';
+        setTimeout(() => goToStep('step-hearts'), 400);
+      } else {
+        err.textContent = 'Wrong password eruma! Try again 🩷';
+        input.value = '';
+      }
+    }
+
+    let touchedCount = 0;
+    function touchHeart(btn) {
+      if (btn.classList.contains('popped')) return;
+      btn.classList.add('popped');
+      touchedCount++;
+      document.getElementById('heartCounter').textContent = `Hearts touched: ${touchedCount} / 5 🩷`;
+      if (touchedCount === 5) {
+        setTimeout(() => goToStep('step-right'), 850);
+      }
+    }
+
+    let cakeBlown = false;
+    function blowCake() {
+      if (cakeBlown) return;
+      cakeBlown = true;
+      document.getElementById('candlesRow').textContent = '💨 💨 💨';
+      document.getElementById('cakeLabel').textContent = '✨ Wish Made! ✨';
+      document.getElementById('blowBtn').textContent = '🎉 Yay! 🎉';
+      setTimeout(() => {
+        goToStep('step-countdown');
+        runSlowCountdown();
+      }, 2000);
+    }
+
+    function runSlowCountdown() {
+      const el = document.getElementById('countNumber');
+      const nums = ['1', '2', '3'];
+      let i = 0;
+
+      function nextNum() {
+        if (i >= nums.length) {
+          setTimeout(() => goToStep('step-bday-special'), 700);
+          return;
+        }
+        el.classList.remove('show');
+        el.textContent = nums[i];
+        setTimeout(() => el.classList.add('show'), 120);
+        setTimeout(() => {
+          el.classList.remove('show');
+          i++;
+          setTimeout(nextNum, 950);
+        }, 2000);
+      }
+      nextNum();
+    }
+
+    const messageLines = [
+      "Dei eruma...",
+      "Nee na enaku romba pidikum..",
+      "Ne ethukum feel pana koodathu..",
+      "Na epovum unkoodaye irupann..",
+      "Endha situation layum yaar irunthalum ilattiyum nee santhosama irukanum okk...",
+      "Ipom unoda life kastama irukalam but future la nee romba periya place povaa..",
+      "❤❤",
+      "Enoda life la kedacha precious pa nee...",
+      "Na romba happy ah irukurathuku reason nee..",
+      "Epovum en heart la little place unaku irukum😁😂😂",
+      "Nee epovvum happy ah irukanummm athu pothumm enakuuu....",
+      "Naa enga irunthalum ne happy ah irukannu therincha pothum...",
+      "Indha year mattum ila ini vara pogura ella year um nee santhosama irukanummm okk va eruma...",
+      "Yaar irunthalum illattiyum na irukan iruppan🫂❤..",
+      { final: "I am always there for you loose.." }
+    ];
+
+    function openSecretMessagePage() {
+      goToStep('step-secret-msg');
+      const container = document.getElementById('msgContainer');
+      const nextBtn = document.getElementById('toWhySpecialBtn');
+      container.innerHTML = '';
+      nextBtn.style.display = 'none';
+
+      let delay = 700;
+      messageLines.forEach((item) => {
+        const div = document.createElement('div');
+        if (typeof item === 'object' && item.final) {
+          div.className = 'msg-line final-highlight';
+          div.textContent = item.final;
+          container.appendChild(div);
+          setTimeout(() => {
+            div.classList.add('show');
+            container.scrollTop = container.scrollHeight;
+            setTimeout(() => { nextBtn.style.display = 'inline-block'; }, 1700);
+          }, delay);
+        } else {
+          div.className = 'msg-line';
+          div.textContent = item;
+          container.appendChild(div);
+          setTimeout(() => {
+            div.classList.add('show');
+            container.scrollTop = container.scrollHeight;
+          }, delay);
+          delay += 2200;
+        }
+      });
+    }
+
+    const specialReasons = [
+      { num: 1, text: "you always make me smile❤🫂" },
+      { num: 2, text: "you understand me without words❤🫂" },
+      { num: 3, text: "you make ordinary days special❤🫂" },
+      { num: 4, text: "you are someone i can trust❤🫂" },
+      { num: 5, text: "Your presence makes me happy❤🫂" },
+      { num: 6, text: "You listen to my silly talks❤🫂" },
+      { num: 7, text: "You make me feel special❤🫂" },
+      { num: 8, text: "Our memories mean a lot to me❤🫂" },
+      { num: 9, text: "No matter how many years pass, our bond remains special❤🫂" },
+      { num: 10, text: "Because you are simply YOU! ❤️🫂" }
+    ];
+
+    let reasonIdx = 0;
+    let reasonShown = false;
+
+    function startNumberReasons() {
+      reasonIdx = 0;
+      renderReason();
+      goToStep('step-reason-item');
+    }
+
+    function renderReason() {
+      const item = specialReasons[reasonIdx];
+      reasonShown = false;
+      document.getElementById('reasonBadge').textContent = `REASON ${item.num} OF 10`;
+      document.getElementById('reasonHint').textContent = `${item.num} ah touch pannu...`;
+      document.getElementById('numberOrb').textContent = item.num;
+
+      const box = document.getElementById('reasonBox');
+      const txt = document.getElementById('reasonText');
+      const btn = document.getElementById('nextReasonBtn');
+      box.classList.remove('show');
+      txt.textContent = '';
+      btn.style.display = 'none';
+      btn.textContent = reasonIdx === specialReasons.length - 1 ? 'Final Note ❤️' : 'Next ➡️';
+    }
+
+    function revealReasonText() {
+      if (reasonShown) return;
+      reasonShown = true;
+      const item = specialReasons[reasonIdx];
+      const box = document.getElementById('reasonBox');
+      const txt = document.getElementById('reasonText');
+      const btn = document.getElementById('nextReasonBtn');
+      txt.textContent = item.text;
+      setTimeout(() => box.classList.add('show'), 120);
+      setTimeout(() => { btn.style.display = 'inline-block'; }, 1600);
+    }
+
+    function nextReasonStep() {
+      if (reasonIdx < specialReasons.length - 1) {
+        reasonIdx++;
+        renderReason();
+      } else {
+        goToStep('step-thank-you');
+      }
+    }
+
+    function restartExperience() {
+      touchedCount = 0;
+      cakeBlown = false;
+      document.getElementById('heartCounter').textContent = 'Hearts touched: 0 / 5 🩷';
+      document.querySelectorAll('.touch-heart-btn').forEach(b => b.classList.remove('popped'));
+      document.getElementById('candlesRow').textContent = '🕯️ 🕯️ 🕯️';
+      document.getElementById('cakeLabel').textContent = '🎂 Birthday Cake 🎂';
+      document.getElementById('blowBtn').textContent = '🌬️ Blow the Cake';
+      document.getElementById('passInput').value = '';
+      goToStep('step-password');
+    }
+  </script>
+
+</body>
+</html>
